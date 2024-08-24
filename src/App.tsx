@@ -1,15 +1,9 @@
-import './App.css'
-import { Button } from './components/ui/button'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './pages/routes'
 
 function App() {
-
   return (
-    <>
-      <div>
-        <Button>Shadcn ui button</Button>
-      </div>
-
-    </>
+    <RouterProvider router={router} />
   )
 }
 
