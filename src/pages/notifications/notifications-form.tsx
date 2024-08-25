@@ -17,6 +17,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { toast } from "@/components/ui/use-toast"
 import { Link } from "react-router-dom"
+import { useNotificationsStore } from "@/stores/notifications.store"
 
 const notificationsFormSchema = z.object({
     type: z.enum(["all", "mentions", "none"], {
@@ -29,23 +30,25 @@ const notificationsFormSchema = z.object({
     security_emails: z.boolean(),
 })
 
-type NotificationsFormValues = z.infer<typeof notificationsFormSchema>
+export type NotificationsFormValues = z.infer<typeof notificationsFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<NotificationsFormValues> = {
-    communication_emails: false,
-    marketing_emails: false,
-    social_emails: true,
-    security_emails: true,
-}
+
 
 export function NotificationsForm() {
+
+    const { notifications, setNotificationsValues } = useNotificationsStore();
+
+    // This can come from your database or API.
+    const defaultValues: Partial<NotificationsFormValues> = {
+        ...notifications
+    }
     const form = useForm<NotificationsFormValues>({
         resolver: zodResolver(notificationsFormSchema),
         defaultValues,
     })
 
     function onSubmit(data: NotificationsFormValues) {
+        setNotificationsValues(data);
         toast({
             title: "You submitted the following values:",
             description: (

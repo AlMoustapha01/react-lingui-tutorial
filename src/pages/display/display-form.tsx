@@ -15,6 +15,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { toast } from "@/components/ui/use-toast"
+import { useDisplayStore } from "@/stores/display.store"
 
 const items = [
     {
@@ -49,20 +50,23 @@ const displayFormSchema = z.object({
     }),
 })
 
-type DisplayFormValues = z.infer<typeof displayFormSchema>
+export type DisplayFormValues = z.infer<typeof displayFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<DisplayFormValues> = {
-    items: ["recents", "home"],
-}
 
 export function DisplayForm() {
+    const { display, setDisplayValues } = useDisplayStore()
+    // This can come from your database or API.
+    const defaultValues: Partial<DisplayFormValues> = {
+        ...display,
+    }
+
     const form = useForm<DisplayFormValues>({
         resolver: zodResolver(displayFormSchema),
         defaultValues,
     })
 
     function onSubmit(data: DisplayFormValues) {
+        setDisplayValues(data);
         toast({
             title: "You submitted the following values:",
             description: (

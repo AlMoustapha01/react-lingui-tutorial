@@ -1,9 +1,11 @@
 import * as React from "react"
-import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
-import { DayPicker } from "react-day-picker"
+import { CaretSortIcon, ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons"
+import { DayPicker, } from "react-day-picker"
+import { default as defaultStyles } from "react-day-picker/dist/style.module.css";
 
 import { cn } from "@/lib/utils"
-import { buttonVariants } from "@/components/ui/button"
+import { buttonVariants } from "./button"
+
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>
 
@@ -11,17 +13,22 @@ function Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  captionLayout = "dropdown",
   ...props
 }: CalendarProps) {
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
+      fromMonth={new Date(1900, 1, 1)}
+      toMonth={new Date()}
+      captionLayout={captionLayout}
       className={cn("p-3", className)}
       classNames={{
+        ...defaultStyles,
         months: "flex flex-col sm:flex-row space-y-4 sm:space-x-4 sm:space-y-0",
         month: "space-y-4",
-        caption: "flex justify-center pt-1 relative items-center",
-        caption_label: "text-sm font-medium",
+
         nav: "space-x-1 flex items-center",
         nav_button: cn(
           buttonVariants({ variant: "outline" }),
@@ -60,6 +67,7 @@ function Calendar({
       components={{
         IconLeft: ({ ...props }) => <ChevronLeftIcon className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRightIcon className="h-4 w-4" />,
+        IconDropdown: ({ ...props }) => <CaretSortIcon className="h-4 w-4" />,
       }}
       {...props}
     />

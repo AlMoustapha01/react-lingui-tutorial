@@ -31,6 +31,7 @@ import {
 } from "@/components/ui/popover"
 import { toast } from "@/components/ui/use-toast"
 import { Button } from "@/components/ui/button"
+import { useAccountStore } from "@/stores/account.store"
 
 const languages = [
     { label: "English", value: "en" },
@@ -61,21 +62,26 @@ const accountFormSchema = z.object({
     }),
 })
 
-type AccountFormValues = z.infer<typeof accountFormSchema>
+export type AccountFormValues = z.infer<typeof accountFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<AccountFormValues> = {
-    // name: "Your name",
-    // dob: new Date("2023-01-23"),
-}
 
 export function AccountForm() {
+    const { account, setAccountValues } = useAccountStore()
+
+    // This can come from your database or API.
+    const defaultValues: Partial<AccountFormValues> = {
+        name: account?.name ?? "Your name",
+        dob: account?.dob ?? new Date("2023-01-23"),
+        language: account?.language ?? "en"
+    }
+
     const form = useForm<AccountFormValues>({
         resolver: zodResolver(accountFormSchema),
         defaultValues,
     })
 
     function onSubmit(data: AccountFormValues) {
+        setAccountValues(data)
         toast({
             title: "You submitted the following values:",
             description: (
@@ -134,6 +140,7 @@ export function AccountForm() {
                                 <PopoverContent className="w-auto p-0" align="start">
                                     <Calendar
                                         mode="single"
+                                        captionLayout="dropdown-buttons"
                                         selected={field.value}
                                         onSelect={field.onChange}
                                         disabled={(date) =>

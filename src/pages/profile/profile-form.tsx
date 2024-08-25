@@ -11,6 +11,7 @@ import { Link } from "react-router-dom"
 import { Textarea } from "../../components/ui/textarea"
 import { Button } from "../../components/ui/button"
 import { toast } from "../../components/ui/use-toast"
+import { useProfileStore } from "@/stores/profile.store"
 
 const profileFormSchema = z.object({
   username: z
@@ -36,18 +37,23 @@ const profileFormSchema = z.object({
     .optional(),
 })
 
-type ProfileFormValues = z.infer<typeof profileFormSchema>
+export type ProfileFormValues = z.infer<typeof profileFormSchema>
 
-// This can come from your database or API.
-const defaultValues: Partial<ProfileFormValues> = {
-  bio: "I own a computer.",
-  urls: [
-    { value: "https://shadcn.com" },
-    { value: "http://twitter.com/shadcn" },
-  ],
-}
 
 export function ProfileForm() {
+  const { setProfileValues, profile } = useProfileStore()
+
+  // This can come from your database or API.
+  const defaultValues: Partial<ProfileFormValues> = {
+    bio: profile?.bio ?? "I own a computer.",
+    urls: profile?.urls ?? [
+      { value: "https://shadcn.com" },
+      { value: "http://twitter.com/shadcn" },
+    ],
+    username: profile?.username,
+    email: profile?.email
+  }
+
   const form = useForm<ProfileFormValues>({
     resolver: zodResolver(profileFormSchema),
     defaultValues,
@@ -60,6 +66,8 @@ export function ProfileForm() {
   })
 
   function onSubmit(data: ProfileFormValues) {
+
+    setProfileValues(data);
     toast({
       title: "You submitted the following values:",
       description: (
