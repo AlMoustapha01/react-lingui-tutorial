@@ -34,15 +34,18 @@ import { Button } from "@/components/ui/button"
 import { useAccountStore } from "@/stores/account.store"
 
 const languages = [
-    { label: "English", value: "en" },
-    { label: "French", value: "fr" },
-    { label: "German", value: "de" },
-    { label: "Spanish", value: "es" },
-    { label: "Portuguese", value: "pt" },
-    { label: "Russian", value: "ru" },
-    { label: "Japanese", value: "ja" },
-    { label: "Korean", value: "ko" },
-    { label: "Chinese", value: "zh" },
+    { label: "English", value: "en-US" },
+    { label: "French", value: "fr-FR" },
+    { label: "German", value: "de-DE" },
+    { label: "Spanish", value: "es-ES" },
+    { label: "Portuguese", value: "pt-PT" },
+    { label: "Italian", value: "it-IT" },
+    { label: "Russian", value: "ru-RU" },
+    { label: "Japanese", value: "ja-JP" },
+    { label: "Arabic", value: "ar-SA" },
+    { label: "Korean", value: "ko-KR" },
+    { label: "Turkish", value: "tr-TR" },
+    { label: "Chinese", value: "zh-CN" },
 ] as const
 
 const accountFormSchema = z.object({
