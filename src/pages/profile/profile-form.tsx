@@ -12,6 +12,7 @@ import { Textarea } from "../../components/ui/textarea"
 import { Button } from "../../components/ui/button"
 import { toast } from "../../components/ui/use-toast"
 import { useProfileStore } from "@/stores/profile.store"
+import { Cross2Icon } from "@radix-ui/react-icons"
 
 const profileFormSchema = z.object({
   username: z
@@ -146,10 +147,11 @@ export function ProfileForm() {
           )}
         />
         <div>
-          {fields.map((field, index) => (
+          {fields.map(({ id }, index) => (
+
             <FormField
               control={form.control}
-              key={field.id}
+              key={id}
               name={`urls.${index}.value`}
               render={({ field }) => (
                 <FormItem>
@@ -160,7 +162,13 @@ export function ProfileForm() {
                     Add links to your website, blog, or social media profiles.
                   </FormDescription>
                   <FormControl>
-                    <Input {...field} />
+                    <div className="flex gap-2">
+                      <Input {...field} />
+                      <Button onClick={(e) => {
+                        const rest = fields.filter((v) => v.id !== id)
+                        form.setValue('urls', rest)
+                      }} variant={'destructive'}><Cross2Icon className="w-3 h-3" /></Button>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
