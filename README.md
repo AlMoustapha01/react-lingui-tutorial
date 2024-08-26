@@ -1,50 +1,25 @@
-# React + TypeScript + Vite
+# Internationalization tutorial with Lingui.js and React
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+This is a demo app used for our tutorial. 
+It's a settings page which allow you to update your personnal info. 
+It's based on Shadcn ui example page => [see here](https://ui.shadcn.com/examples/forms)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Stack
 
-## Expanding the ESLint configuration
+- React + Vite
+- Typescript
+- [Shadcn/ui](https://ui.shadcn.com/) ( component library) 
+- [react-hook-form](https://react-hook-form.com/) + [zod](https://zod.dev/) for form validation
+- [zustand](https://zustand.docs.pmnd.rs/getting-started/introduction) and state management solution like redux
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## demo
+<video src="https://github.com/user-attachments/assets/c2229984-6ee3-41dd-9828-cbd3e3b4b950" width="320" height="240" controls></video>
 
-- Configure the top-level `parserOptions` property like this:
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Start
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+$ pnpm install
+$ pnpm run dev
 ```
